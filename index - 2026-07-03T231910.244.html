@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fieldworks — Built with you, not for you.</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1E3D2B;
+    --green-mid: #2D5A3D;
+    --green-deep: #16291D;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --cream: #F7F4EF;
+    --charcoal: #1A1A1A;
+    --gray: #6B7280;
+    --gray-light: #E5E1DA;
+    --white: #FFFFFF;
+    --red-soft: #C0392B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  a { text-decoration: none; color: inherit; }
+
+  /* NAV */
+  nav {
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(247, 244, 239, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(30, 61, 43, 0.08);
+  }
+
+  .logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 32px;
+    color: var(--green);
+    letter-spacing: -0.5px;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .nav-links a {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--charcoal);
+    transition: color 0.15s;
+  }
+
+  .nav-links a:hover { color: var(--green); }
+
+  .nav-cta {
+    background: var(--green);
+    color: var(--cream) !important;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    transition: background 0.15s;
+  }
+
+  .nav-cta:hover { background: var(--green-mid); }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 92vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 140px 24px 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.1s forwards;
+  }
+
+  .hero h1 {
+    font-size: clamp(38px, 6.5vw, 68px);
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1.08;
+    letter-spacing: -0.03em;
+    max-width: 920px;
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.25s forwards;
+  }
+
+  .hero h1 .accent { color: var(--gold); }
+
+  .hero p {
+    font-size: 19px;
+    color: var(--gray);
+    line-height: 1.6;
+    max-width: 560px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.4s forwards;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeUp 0.6s ease 0.55s forwards;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold);
+    color: var(--green);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 16px 32px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    color: var(--green);
+    font-weight: 600;
+    font-size: 16px;
+    padding: 16px 28px;
+    border-radius: 8px;
+    border: 2px solid var(--green);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .btn-secondary:hover { background: rgba(30,61,43,0.06); }
+
+  /* SECTION SHARED */
+  section {
+    padding: 100px 24px;
+    max-width: 1120px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .section-title {
+    font-size: clamp(28px, 4.5vw, 42px);
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: -0.02em;
+    text-align: center;
+    line-height: 1.2;
+    max-width: 700px;
+    margin: 0 auto 60px;
+  }
+
+  /* SHOWCASE SECTION - Code + App mockups */
+  .showcase {
+    background: var(--green-deep);
+    border-radius: 24px;
+    padding: 72px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .showcase .section-label { color: var(--gold); }
+  .showcase .section-title { color: var(--cream); }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+  }
+
+  @media (max-width: 860px) {
+    .showcase-grid { grid-template-columns: 1fr; }
+    .showcase { padding: 48px 24px; }
+  }
+
+  /* Code panel */
+  .code-panel {
+    background: #0D1810;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(201,168,76,0.15);
+    height: 400px;
+    position: relative;
+  }
+
+  .code-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 16px;
+    background: rgba(255,255,255,0.03);
+    border-bottom: 1px solid rgba(201,168,76,0.1);
+  }
+
+  .code-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .code-panel-body {
+    padding: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    overflow-y: auto;
+    scrollbar-width: none;
+    height: calc(100% - 44px);
+    position: relative;
+    color: #E8E4DA;
+  }
+
+  .code-panel-body::-webkit-scrollbar { display: none; }
+
+  .code-scroll {
+    position: absolute;
+    width: 100%;
+    animation: scrollCode 18s linear infinite;
+  }
+
+  @keyframes scrollCode {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-50%); }
+  }
+
+  .code-line { white-space: pre; }
+  .c-keyword { color: #D9BB66; }
+  .c-func { color: #8FCC9E; }
+  .c-string { color: #E8C96A; }
+  .c-comment { color: #7A9686; }
+  .c-var { color: #F7F4EF; }
+  .c-type { color: #A8C9BA; }
+
+  /* Phone mockup */
+  .phone-mockup {
+    width: 240px;
+    height: 480px;
+    background: var(--charcoal);
+    border-radius: 36px;
+    padding: 10px;
+    position: relative;
+    margin: 0 auto;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  }
+
+  .phone-screen {
+    width: 100%;
+    height: 100%;
+    background: var(--cream);
+    border-radius: 26px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .phone-notch {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 18px;
+    background: var(--charcoal);
+    border-radius: 10px;
+    z-index: 10;
+  }
+
+  .app-header {
+    background: #2A2E2B;
+    padding: 40px 16px 14px;
+    color: var(--cream);
+  }
+
+  .app-header-label {
+    font-size: 9px;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .app-header-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+
+  .app-body {
+    padding: 14px;
+    height: calc(100% - 78px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+
+  .app-body::-webkit-scrollbar { display: none; }
+
+  .app-add-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: var(--white);
+    border: 1.5px dashed var(--gray-light);
+    border-radius: 8px;
+    padding: 12px;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 600;
+    margin-top: 4px;
+    opacity: 0;
+    animation: fadeUp 0.4s ease forwards;
+  }
+
+  .app-card {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+    border: 1px solid var(--gray-light);
+    opacity: 0;
+    animation: fadeUp 0.5s ease forwards;
+  }
+
+  .app-card-label {
+    font-size: 9px;
+    color: var(--gray);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+  }
+
+  .app-card-value {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--green);
+  }
+
+  .app-field-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .app-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    font-size: 11px;
+    font-weight: 700;
+  }
+
+  .showcase-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
+  }
+
+  .showcase-tab {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(201,168,76,0.25);
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+
+  .showcase-tab.active { background: var(--gold); }
+
+  .showcase-caption {
+    text-align: center;
+    margin-top: 24px;
+    color: rgba(247,244,239,0.6);
+    font-size: 14px;
+  }
+
+  .showcase-caption strong { color: var(--gold); font-weight: 600; }
+
+  /* WE'VE BEEN THERE */
+  .story-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  @media (max-width: 860px) {
+    .story-section { grid-template-columns: 1fr; gap: 40px; }
+  }
+
+  .story-text .section-label { text-align: left; }
+
+  .story-text h2 {
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 800;
+    color: var(--green);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .story-text p {
+    font-size: 16px;
+    color: var(--gray);
+    line-height: 1.75;
+    margin-bottom: 16px;
+  }
+
+  .story-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 32px;
+  }
+
+  .story-stat {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: 12px;
+    padding: 18px 14px;
+    text-align: center;
+  }
+
+  .story-stat-num {
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--green);
+    display: block;
+    letter-spacing: -0.02em;
+  }
+
+  .story-stat-label {
+    font-size: 11px;
+    color: var(--gray);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  .story-visual {
+    background: var(--green);
+    border-radius: 20px;
+    padding: 32px;
+    position: relative;
+  }
+
+  .story-quote {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--cream);
+    line-height: 1.5;
+    margin-bottom: 24px;
+  }
+
+  .story-quote .gold { color: var(--gold); }
+
+  .story-attribution {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .story-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--green);
+    font-weight: 700;
+    font-size: 14px;
+  }
+
+  .story-attribution-name {
+    color: var(--cream);
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .story-attribution-role {
+    color: rgba(247,244,239,0.55);
+    font-size: 12px;
+  }
+
+  /* BEFORE / AFTER */
+  .ba-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  @media (max-width: 700px) {
+    .ba-grid { grid-template-columns: 1fr; }
+  }
+
+  .ba-card {
+    border-radius: 16px;
+    padding: 32px;
+  }
+
+  .ba-before {
+    background: var(--white);
+    border: 2px solid var(--gray-light);
+  }
+
+  .ba-after {
+    background: var(--green);
+  }
+
+  .ba-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .ba-before .ba-label { color: var(--red-soft); }
+  .ba-after .ba-label { color: var(--gold); }
+
+  .ba-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+
+  .ba-before .ba-item { color: var(--charcoal); }
+  .ba-after .ba-item { color: var(--cream); }
+
+  .ba-icon {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    margin-top: 1px;
+  }
+
+  .ba-before .ba-icon { background: rgba(192,57,43,0.1); color: var(--red-soft); }
+  .ba-after .ba-icon { background: rgba(201,168,76,0.2); color: var(--gold); }
+
+  /* SERVICES */
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  @media (max-width: 860px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+
+  .service-card {
+    background: var(--white);
+    border: 1px solid var(--gray-light);
+    border-radius: 16px;
+    padding: 32px 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .service-card:hover {
+    border-color: var(--gold);
+    transform: translateY(-3px);
+  }
+
+  .service-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--gold);
+    font-weight: 500;
+    margin-bottom: 20px;
+  }
+
+  .service-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--green);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+  }
+
+  .service-card p {
+    font-size: 14.5px;
+    color: var(--gray);
+    line-height: 1.6;
+  }
+
+  /* FINAL CTA */
+  .final-cta {
+    background: var(--green);
+    border-radius: 24px;
+    padding: 72px 40px;
+    text-align: center;
+  }
+
+  .final-cta h2 {
+    font-size: clamp(28px, 4.5vw, 42px);
+    font-weight: 800;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+  }
+
+  .final-cta h2 .gold { color: var(--gold); }
+
+  .final-cta p {
+    font-size: 17px;
+    color: rgba(247,244,239,0.65);
+    max-width: 480px;
+    margin: 0 auto 36px;
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 56px 24px 32px;
+    max-width: 1120px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    border-top: 1px solid var(--gray-light);
+  }
+
+  .footer-logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 26px;
+    color: var(--green);
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .footer-links a {
+    font-size: 13px;
+    color: var(--gray);
+    transition: color 0.15s;
+  }
+
+  .footer-links a:hover { color: var(--green); }
+
+  .footer-copy {
+    font-size: 12px;
+    color: var(--gray);
+    width: 100%;
+    text-align: center;
+    margin-top: 12px;
+    padding-top: 20px;
+    border-top: 1px solid var(--gray-light);
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 640px) {
+    .pill-row {
+      justify-content: flex-start !important;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 6px;
+      margin: 0 -24px;
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+  }
+
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">fieldworks</a>
+  <div class="nav-links">
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="fieldworks-assessment.html" class="nav-cta">Free Assessment</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Built the way you need it done.</div>
+  <h1>We build the tools your operation<br>actually needs<span class="accent">.</span></h1>
+  <p>Fieldworks turns your paper processes into simple tools your team will actually use — built by people who run a construction company.</p>
+  <div class="hero-actions">
+    <a href="fieldworks-assessment.html" class="btn-primary">Take the Free Assessment →</a>
+    <a href="how-it-works.html" class="btn-secondary">See How It Works</a>
+  </div>
+</div>
+
+<!-- SHOWCASE -->
+<section>
+  <div class="showcase reveal">
+    <div class="section-label">You already know the problem.</div>
+    <div class="section-title">Real construction days don't fit in a timecard — so we built one that doesn't pretend they do.</div>
+    <p style="text-align:center; color:rgba(247,244,239,0.6); font-size:15px; max-width:600px; margin:-32px auto 48px; line-height:1.6;">Most timecard tools assume one job, one clock-in, one clock-out. Real days aren't that simple.</p>
+
+    <div class="showcase-grid">
+      <div class="code-panel">
+        <div class="code-panel-header">
+          <div class="code-dot" style="background:#E8534E"></div>
+          <div class="code-dot" style="background:#E8B84E"></div>
+          <div class="code-dot" style="background:#4EB870"></div>
+          <div style="margin-left:auto; font-size:10px; color:rgba(201,168,76,0.5); font-family:'JetBrains Mono',monospace;">live build</div>
+        </div>
+        <div class="code-panel-body">
+          <div id="codeTyping"></div>
+        </div>
+      </div>
+
+      <div id="phoneContainer">
+        <div class="phone-mockup">
+          <div class="phone-screen">
+            <div class="phone-notch"></div>
+            <div class="app-header">
+              <div class="app-header-label">WORK BLOCK BUILDER</div>
+              <div class="app-header-title">Peter French · Today</div>
+            </div>
+            <div class="app-body" id="blockBuilderBody"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="showcase-caption">Watch a real day get built — <strong>one worker, multiple wages, done right the first time</strong></div>
+  </div>
+</section>
+
+<!-- ECOSYSTEM STRIP -->
+<section style="padding-top:0;">
+  <div class="reveal" style="text-align:center; max-width:960px; margin:0 auto;">
+    <div class="section-label">Timecards aren't the only thing running on paper.</div>
+    <h3 style="font-size:clamp(22px,3.5vw,30px); font-weight:800; color:var(--green); letter-spacing:-0.02em; line-height:1.35; margin-bottom:20px; max-width:700px; margin-left:auto; margin-right:auto;">
+      Field tests. Concrete orders. Job boards. Equipment logs. Whatever your version of this looks like — you're not stuck with it.
+    </h3>
+    <p style="color:var(--gray); font-size:15.5px; line-height:1.7; margin-bottom:32px; max-width:640px; margin-left:auto; margin-right:auto;">
+      Every operation has its own paperwork problem, its own workarounds, its own last-minute changes. Fieldworks exists to sit down, figure out what yours actually looks like, and build something that fits it.
+    </p>
+    <div class="pill-row" style="display:flex; gap:8px; justify-content:center; flex-wrap:nowrap;">
+      <span style="background:var(--white); border:1px solid var(--gray-light); border-radius:30px; padding:7px 14px; font-size:12.5px; font-weight:600; color:var(--green); white-space:nowrap;">General Contractors</span>
+      <span style="background:var(--white); border:1px solid var(--gray-light); border-radius:30px; padding:7px 14px; font-size:12.5px; font-weight:600; color:var(--green); white-space:nowrap;">Specialty Contractors</span>
+      <span style="background:var(--white); border:1px solid var(--gray-light); border-radius:30px; padding:7px 14px; font-size:12.5px; font-weight:600; color:var(--green); white-space:nowrap;">Testing & Inspection</span>
+      <span style="background:var(--white); border:1px solid var(--gray-light); border-radius:30px; padding:7px 14px; font-size:12.5px; font-weight:600; color:var(--green); white-space:nowrap;">Batch Plants</span>
+      <span style="background:var(--white); border:1px solid var(--gray-light); border-radius:30px; padding:7px 14px; font-size:12.5px; font-weight:600; color:var(--green); white-space:nowrap;">Trucking & Hauling</span>
+    </div>
+  </div>
+</section>
+
+
+<!-- WE'VE BEEN THERE -->
+<section>
+  <div class="story-section reveal">
+    <div class="story-text">
+      <div class="section-label">We've been there</div>
+      <h2>We didn't start as consultants. We started as the client.</h2>
+      <p>We built Fieldworks out of our own construction and batch plant operation — real payroll, real federal contracts, real 3am texts and phone calls about a pour that didn't get scheduled right.</p>
+      <p>We built our first app to fix our own timecard chaos. It worked. Then our clients and partners started asking who built it. We did and that's Fieldworks.</p>
+      <div class="story-stats">
+        <div class="story-stat">
+          <span class="story-stat-num">$3K</span>
+          <span class="story-stat-label">weekly admin savings from timecards alone</span>
+        </div>
+        <div class="story-stat">
+          <span class="story-stat-num">14</span>
+          <span class="story-stat-label">average monthly corrections caught before payroll</span>
+        </div>
+        <div class="story-stat">
+          <span class="story-stat-num">100's</span>
+          <span class="story-stat-label">of hours saved</span>
+        </div>
+      </div>
+    </div>
+    <div class="story-visual">
+      <div class="story-quote">"We were chasing down timecard mistakes every week. Now we catch them before payroll — and we can <span class="gold">show you the math</span>."</div>
+      <div class="story-attribution">
+        <div class="story-avatar">JM</div>
+        <div>
+          <div class="story-attribution-name">Jonathon Miller</div>
+          <div class="story-attribution-role">Co-Founder, Fieldworks · Partner, White Bear Construction</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section>
+  <div class="section-label reveal">The difference</div>
+  <div class="section-title reveal">Same pour day. Completely different experience.</div>
+  <div class="ba-grid reveal">
+    <div class="ba-card ba-before">
+      <div class="ba-label">Before Fieldworks</div>
+      <div class="ba-item"><span class="ba-icon">✕</span> Techs sample every other truck, then stop to call or text results</div>
+      <div class="ba-item"><span class="ba-icon">✕</span> You're reacting load by load with no visibility into the trend</div>
+      <div class="ba-item"><span class="ba-icon">✕</span> Adjustments get made on gut instinct and a phone call</div>
+      <div class="ba-item"><span class="ba-icon">✕</span> Site visits to confirm what a dashboard could show instantly</div>
+    </div>
+    <div class="ba-card ba-after">
+      <div class="ba-label">With Fieldworks</div>
+      <div class="ba-item"><span class="ba-icon">✓</span> Techs log each sample in seconds — no stopping to call it in</div>
+      <div class="ba-item"><span class="ba-icon">✓</span> You see the trend live, so the batch plant calls first and can adjust the mud</div>
+      <div class="ba-item"><span class="ba-icon">✓</span> When something does need a conversation, you're both already looking at the same numbers</div>
+      <div class="ba-item"><span class="ba-icon">✓</span> Site visits happen because you want to be there — not because it's the only way to know</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section>
+  <div class="section-label reveal">How we work</div>
+  <div class="section-title reveal">Three steps. No long contracts. No guessing.</div>
+  <div class="services-grid reveal">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>Discovery & Mapping</h3>
+      <p>We sit with your team, whiteboard your actual process, and map exactly where paper and manual steps are costing you time. Then decide where we start.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Build & Iterate</h3>
+      <p>We build your app and get it into your team's hands fast — then refine it in real rounds based on how they actually use it, not a six month roadmap.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Support That Sticks Around</h3>
+      <p>Jobs are complex and your operation has to react. Your app should too. We stay on as your build evolves — new needs, new processes, ongoing support.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section>
+  <div class="final-cta reveal">
+    <h2>How much is your <span class="gold">paperwork</span> costing you?</h2>
+    <p>Answer 6 questions about how your operation runs today. Get a personalized report in about 60 seconds. No email required.</p>
+    <a href="fieldworks-assessment.html" class="btn-primary">Take the Free Assessment →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">fieldworks</div>
+  <div class="footer-links">
+    <a href="how-it-works.html">How It Works</a>
+    <a href="about.html">About</a>
+    <a href="fieldworks-assessment.html">Free Assessment</a>
+    <a href="mailto:hello@myfieldworks.com">hello@myfieldworks.com</a>
+  </div>
+  <div class="footer-copy">© 2026 My Fieldworks, LLC. Built with you, not for you.</div>
+</footer>
+
+<script>
+  // ===== TYPEWRITER CODE — writes, catches a mistake, fixes it, keeps going =====
+  const codeScript = [
+    { type: 'type', text: "const block1 = {\n" },
+    { type: 'type', text: "  job: 'FS Clover Meadows',\n" },
+    { type: 'type', text: "  type: 'Field',\n" },
+    { type: 'type', text: "  equipment: 'PC 238 Excavator',\n" },
+    { type: 'type', text: "  hoours: 6.0,\n" },
+    { type: 'pause', ms: 450 },
+    { type: 'comment', text: "  // typo — fixing" },
+    { type: 'backspace', count: 13 },
+    { type: 'type', text: "hours: 6.0,\n" },
+    { type: 'type', text: "  photo: 'north_section.jpg'\n" },
+    { type: 'type', text: "};\n\n" },
+    { type: 'type', text: "const block2 = {\n" },
+    { type: 'type', text: "  job: 'NPS Yosemite Parking Lots',\n" },
+    { type: 'type', text: "  type: 'Trucker',\n" },
+    { type: 'type', text: "  equipment: 'Lowbed · Water Truck',\n" },
+    { type: 'type', text: "  hours: 4.0\n" },
+    { type: 'type', text: "};\n\n" },
+    { type: 'comment', text: "  // one worker, two jobs, two wage types" },
+    { type: 'type', text: "submitBlocks([block1, block2]).then(() => {\n" },
+    { type: 'type', text: "  updatePayroll();\n" },
+    { type: 'type', text: "  splitJobCosting();\n" },
+    { type: 'type', text: "  fileDailyReports();\n" },
+    { type: 'type', text: "});" },
+    { type: 'pause', ms: 1800 },
+    { type: 'clear' },
+    { type: 'pause', ms: 400 },
+  ];
+
+  const codeTypingEl = document.getElementById('codeTyping');
+  let scriptIndex = 0;
+  let buffer = [];
+
+  function colorizeLine(line) {
+    return line
+      .replace(/(function|const|return|new Set)/g, '<span class="c-keyword">$1</span>')
+      .replace(/(\.filter|\.reduce|\.map)/g, '<span class="c-func">$1</span>')
+      .replace(/(job_id|job|entries|blocks|hours|filed|crew|totalHours|name)(?=:)/g, '<span class="c-type">$1</span>');
+  }
+
+  function renderBuffer() {
+    const text = buffer.join('');
+    const lines = text.split('\n');
+    const html = lines.map(l => `<div class="code-line">${colorizeLine(l) || '&nbsp;'}</div>`).join('');
+    codeTypingEl.innerHTML = html + '<span style="display:inline-block;width:7px;height:14px;background:var(--gold);vertical-align:middle;animation:blink 0.8s infinite;"></span>';
+    const panel = document.getElementById('codeTyping').parentElement;
+    panel.scrollTop = panel.scrollHeight;
+  }
+
+  function typeChar(text, cb) {
+    let i = 0;
+    function step() {
+      if (i < text.length) {
+        buffer.push(text[i]);
+        renderBuffer();
+        i++;
+        setTimeout(step, 18 + Math.random() * 22);
+      } else {
+        cb();
+      }
+    }
+    step();
+  }
+
+  function backspace(count, cb) {
+    let i = 0;
+    function step() {
+      if (i < count) {
+        buffer.pop();
+        renderBuffer();
+        i++;
+        setTimeout(step, 14);
+      } else {
+        cb();
+      }
+    }
+    step();
+  }
+
+  function runCodeScript() {
+    if (scriptIndex >= codeScript.length) {
+      scriptIndex = 0;
+      buffer = [];
+      setTimeout(runCodeScript, 600);
+      return;
+    }
+    const step = codeScript[scriptIndex];
+    scriptIndex++;
+
+    if (step.type === 'type') {
+      typeChar(step.text, runCodeScript);
+    } else if (step.type === 'backspace') {
+      backspace(step.count, runCodeScript);
+    } else if (step.type === 'pause') {
+      setTimeout(runCodeScript, step.ms);
+    } else if (step.type === 'clear') {
+      buffer = [];
+      renderBuffer();
+      runCodeScript();
+    } else if (step.type === 'comment') {
+      // insert comment line in gold-gray, briefly, then remove it (shows self-correction / iteration)
+      const commentDiv = document.createElement('div');
+      commentDiv.className = 'code-line c-comment';
+      commentDiv.style.opacity = '0.85';
+      commentDiv.textContent = step.text;
+      codeTypingEl.appendChild(commentDiv);
+      setTimeout(() => {
+        runCodeScript();
+      }, 650);
+    }
+  }
+
+  runCodeScript();
+
+  // ===== WORK BLOCK BUILDER — real mechanic: field block w/ equipment, photo, then trucker block =====
+  const blockSteps = [
+    { kind: 'header', text: 'Building Block 1 — Field' },
+    { kind: 'block', job: 'FS Clover Meadows', hours: '6.0', type: 'Field', equipment: 'PC 238 Excavator' },
+    { kind: 'header', text: 'Attaching photo to Block 1' },
+    { kind: 'photo', caption: 'North section — cut complete' },
+    { kind: 'header', text: 'Adding Block 2 — different wage, different work' },
+    { kind: 'truckerblock', job: 'NPS Yosemite Parking Lots', hours: '4.0', type: 'Trucker', equipment: 'Lowbed · Water Truck' },
+    { kind: 'header', text: 'Submitting — routing to 3 systems' },
+    { kind: 'routes' },
+  ];
+
+  const blockBody = document.getElementById('blockBuilderBody');
+  let blockStepIndex = 0;
+  let builtBlocks = [];
+
+  function renderBlockBuilder() {
+    if (blockStepIndex >= blockSteps.length) {
+      setTimeout(() => {
+        blockStepIndex = 0;
+        builtBlocks = [];
+        renderBlockBuilder();
+      }, 2800);
+      return;
+    }
+
+    const step = blockSteps[blockStepIndex];
+
+    if (step.kind === 'header') {
+      blockBody.innerHTML = renderBuiltBlocks() + `
+        <div style="font-size:11px; color:var(--gray); font-style:italic; padding:8px 2px;">${step.text}</div>
+      `;
+      blockStepIndex++;
+      setTimeout(renderBlockBuilder, 1000);
+
+    } else if (step.kind === 'block' || step.kind === 'truckerblock') {
+      builtBlocks.push(step);
+      blockBody.innerHTML = renderBuiltBlocks() + addBlockButton();
+      blockBody.scrollTo({ top: blockBody.scrollHeight, behavior: 'smooth' });
+      blockStepIndex++;
+      setTimeout(renderBlockBuilder, 1500);
+
+    } else if (step.kind === 'photo') {
+      // attach photo to the most recent block
+      if (builtBlocks.length) {
+        builtBlocks[builtBlocks.length - 1].photo = step.caption;
+      }
+      blockBody.innerHTML = renderBuiltBlocks() + addBlockButton();
+      blockBody.scrollTo({ top: blockBody.scrollHeight, behavior: 'smooth' });
+      blockStepIndex++;
+      setTimeout(renderBlockBuilder, 1500);
+
+    } else if (step.kind === 'routes') {
+      blockBody.innerHTML = renderBuiltBlocks() + `
+        <div style="margin-top:10px; display:flex; flex-direction:column; gap:6px;" id="routeList"></div>
+      `;
+      const routes = ['Payroll updated — correct wage per block', 'Job cost split across both jobs', 'Daily reports filed × 2', 'Daily reports verified — photo included'];
+      const routeList = document.getElementById('routeList');
+      routes.forEach((r, i) => {
+        setTimeout(() => {
+          const el = document.createElement('div');
+          el.className = 'app-card';
+          el.style.padding = '9px 12px';
+          el.style.display = 'flex';
+          el.style.alignItems = 'center';
+          el.style.gap = '8px';
+          el.innerHTML = `<div class="app-check" style="width:16px;height:16px;font-size:9px; flex-shrink:0;">✓</div><span style="font-size:11.5px; font-weight:600; color:var(--green); line-height:1.3;">${r}</span>`;
+          routeList.appendChild(el);
+          blockBody.scrollTo({ top: blockBody.scrollHeight, behavior: 'smooth' });
+        }, i * 480);
+      });
+      blockStepIndex++;
+      setTimeout(renderBlockBuilder, 2600);
+    }
+  }
+
+  function addBlockButton() {
+    const nextIsTrucker = builtBlocks.length === 1;
+    const label = nextIsTrucker ? '+ Add Trucking Block' : '+ Add Work Block';
+    return `<div class="app-add-btn">${label}</div>`;
+  }
+
+  function renderBuiltBlocks() {
+    return builtBlocks.map((b, i) => `
+      <div class="app-card" style="margin-bottom:8px;">
+        <div class="app-card-label">Block ${i + 1} · ${b.type}</div>
+        <div class="app-field-row">
+          <div class="app-card-value" style="font-size:13px;">${b.job}</div>
+          <div style="background:var(--green); color:var(--cream); border-radius:20px; padding:3px 10px; font-size:12px; font-weight:700; white-space:nowrap; flex-shrink:0;">${b.hours}h</div>
+        </div>
+        ${b.equipment ? `<div style="font-size:10.5px; color:var(--gray); margin-top:4px;">Equipment: <span style="color:var(--charcoal); font-weight:600;">${b.equipment}</span></div>` : ''}
+        ${b.photo ? `
+          <div style="display:flex; align-items:center; gap:8px; margin-top:8px; padding-top:8px; border-top:1px dashed var(--gray-light);">
+            <div style="width:36px; height:36px; border-radius:6px; background:linear-gradient(160deg, #8B9B94 0%, #5C6862 50%, #3D453F 100%); flex-shrink:0; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden;">
+              <div style="width:16px; height:12px; border:1.5px solid rgba(247,244,239,0.7); border-radius:2px; position:relative;"><div style="width:5px;height:5px;border-radius:50%;background:rgba(247,244,239,0.7);position:absolute;top:2.5px;left:5px;"></div></div>
+            </div>
+            <div style="font-size:10px; color:var(--gray); line-height:1.3;">${b.photo}</div>
+          </div>
+        ` : ''}
+      </div>
+    `).join('');
+  }
+
+  renderBlockBuilder();
+
+  // SCROLL REVEAL
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Fieldworks Report</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1E3D2B;
+    --green-mid: #2D5A3D;
+    --gold: #C9A84C;
+    --gold-light: #E8C96A;
+    --cream: #F7F4EF;
+    --charcoal: #1A1A1A;
+    --gray: #6B7280;
+    --gray-light: #E5E1DA;
+    --white: #FFFFFF;
+    --red-soft: #C0392B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--gray-light);
+    background: var(--cream);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+
+  .logo {
+    font-family: 'Pacifico', cursive;
+    font-size: 28px;
+    color: var(--green);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+  }
+
+  .nav-tag {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  /* HERO */
+  .hero {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 64px 24px 48px;
+    text-align: center;
+  }
+
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    border: 1px solid var(--gold);
+    padding: 4px 12px;
+    border-radius: 20px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 6vw, 52px);
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 20px;
+  }
+
+  .hero h1 span {
+    color: var(--gold);
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-bottom: 36px;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    font-size: 13px;
+    color: var(--gray);
+    margin-bottom: 48px;
+  }
+
+  .meta-dot {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background: var(--gray-light);
+  }
+
+  /* ANIMATED PREVIEW CARD */
+  .preview-wrap {
+    background: var(--green);
+    border-radius: 16px;
+    padding: 28px;
+    margin: 0 auto 48px;
+    max-width: 560px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .preview-wrap::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    right: -40px;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: rgba(201, 168, 76, 0.08);
+  }
+
+  .preview-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .preview-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201, 168, 76, 0.3);
+  }
+
+  .preview-url {
+    font-size: 11px;
+    color: rgba(247, 244, 239, 0.4);
+    margin-bottom: 16px;
+    font-family: monospace;
+  }
+
+  .preview-card {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .preview-company {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .preview-headline {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .preview-headline .highlight {
+    color: var(--red-soft);
+  }
+
+  .preview-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .stat-box {
+    background: var(--white);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--green);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    color: var(--gray);
+    margin-top: 2px;
+    line-height: 1.3;
+  }
+
+  .preview-processes {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .process-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+  }
+
+  .process-name {
+    color: var(--charcoal);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .process-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .process-bar-wrap {
+    flex: 1;
+    height: 4px;
+    background: var(--gray-light);
+    border-radius: 2px;
+    margin: 0 10px;
+    overflow: hidden;
+  }
+
+  .process-bar {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    width: 0%;
+    transition: width 1s ease;
+  }
+
+  .process-hrs {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--green);
+    min-width: 32px;
+    text-align: right;
+  }
+
+  /* CTA BUTTON */
+  .btn-primary {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--green);
+    font-weight: 700;
+    font-size: 16px;
+    padding: 16px 36px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-1px);
+  }
+
+  .btn-primary:active { transform: translateY(0); }
+
+  /* ASSESSMENT FLOW */
+  .assessment-section {
+    display: none;
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .assessment-section.active { display: block; }
+
+  .progress-bar-wrap {
+    height: 3px;
+    background: var(--gray-light);
+    border-radius: 2px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 2px;
+    transition: width 0.4s ease;
+  }
+
+  .q-number {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .q-text {
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 700;
+    color: var(--green);
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+  }
+
+  .options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .option-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    border: 2px solid var(--gray-light);
+    border-radius: 10px;
+    background: var(--white);
+    cursor: pointer;
+    font-size: 15px;
+    color: var(--charcoal);
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    width: 100%;
+  }
+
+  .option-btn:hover {
+    border-color: var(--gold);
+    background: #FFFDF7;
+  }
+
+  .option-btn.selected {
+    border-color: var(--green);
+    background: rgba(30, 61, 43, 0.04);
+  }
+
+  .option-btn.selected .opt-check {
+    background: var(--green);
+    border-color: var(--green);
+  }
+
+  .option-btn.selected .opt-check::after {
+    display: block;
+  }
+
+  .opt-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid var(--gray-light);
+    flex-shrink: 0;
+    position: relative;
+    transition: all 0.15s;
+  }
+
+  .opt-check.square {
+    border-radius: 4px;
+  }
+
+  .opt-check::after {
+    content: '';
+    display: none;
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--cream);
+  }
+
+  .opt-check.square::after {
+    border-radius: 2px;
+  }
+
+  .next-btn {
+    background: var(--green);
+    color: var(--cream);
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .next-btn:hover { background: var(--green-mid); }
+  .next-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+  /* MULTI SELECT GRID */
+  .multi-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 480px) {
+    .multi-grid { grid-template-columns: 1fr; }
+  }
+
+  .multi-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 14px;
+    border: 2px solid var(--gray-light);
+    border-radius: 10px;
+    background: var(--white);
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--charcoal);
+    text-align: left;
+    transition: border-color 0.15s, background 0.15s;
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+  }
+
+  .multi-btn:hover { border-color: var(--gold); }
+
+  .multi-btn.selected {
+    border-color: var(--green);
+    background: rgba(30, 61, 43, 0.04);
+  }
+
+  .multi-btn .opt-check {
+    flex-shrink: 0;
+  }
+
+  /* RESULTS */
+  .results-section {
+    display: none;
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+  }
+
+  .results-section.active { display: block; }
+
+  .report-header {
+    background: var(--green);
+    border-radius: 16px;
+    padding: 32px;
+    margin-bottom: 24px;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .report-header::before {
+    content: '';
+    position: absolute;
+    bottom: -60px;
+    right: -60px;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(201, 168, 76, 0.08);
+  }
+
+  .report-tag {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .report-headline {
+    font-size: clamp(22px, 4vw, 30px);
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+
+  .report-headline .red { color: #F87171; }
+
+  .report-sub {
+    font-size: 14px;
+    color: rgba(247, 244, 239, 0.6);
+    margin-bottom: 24px;
+  }
+
+  .report-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    .report-stats { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .r-stat {
+    background: rgba(247, 244, 239, 0.08);
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+  }
+
+  .r-stat-num {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    letter-spacing: -0.02em;
+  }
+
+  .r-stat-label {
+    font-size: 11px;
+    color: rgba(247, 244, 239, 0.6);
+    margin-top: 4px;
+    line-height: 1.3;
+  }
+
+  .result-card {
+    background: var(--white);
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 16px;
+    border: 1px solid var(--gray-light);
+  }
+
+  .result-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--gray);
+    margin-bottom: 16px;
+  }
+
+  .process-result-row {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--gray-light);
+    font-size: 14px;
+    gap: 6px;
+  }
+
+  .process-result-row:last-child { border-bottom: none; }
+
+  .process-result-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .process-result-name {
+    color: var(--charcoal);
+    font-weight: 500;
+    font-size: 14px;
+  }
+
+  .process-result-hrs {
+    font-weight: 700;
+    color: var(--green);
+    font-size: 14px;
+  }
+
+  .process-bar-track {
+    width: 100%;
+    height: 6px;
+    background: var(--gray-light);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .process-bar-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 3px;
+    width: 0%;
+    transition: width 0.8s ease;
+  }
+
+  .risk-badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 20px;
+    background: rgba(248, 113, 113, 0.1);
+    color: var(--red-soft);
+  }
+
+  .accuracy-card {
+    background: rgba(192, 57, 43, 0.05);
+    border: 1px solid rgba(192, 57, 43, 0.15);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+  }
+
+  .accuracy-icon {
+    font-size: 22px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .accuracy-text h4 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--red-soft);
+    margin-bottom: 4px;
+  }
+
+  .accuracy-text p {
+    font-size: 13px;
+    color: var(--gray);
+    line-height: 1.5;
+  }
+
+  .cta-card {
+    background: var(--green);
+    border-radius: 16px;
+    padding: 32px;
+    text-align: center;
+    color: var(--cream);
+    margin-top: 24px;
+  }
+
+  .cta-card h3 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .cta-card p {
+    font-size: 14px;
+    color: rgba(247, 244, 239, 0.7);
+    margin-bottom: 24px;
+    line-height: 1.6;
+  }
+
+  .btn-gold {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--green);
+    font-weight: 700;
+    font-size: 15px;
+    padding: 14px 28px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: -0.01em;
+    transition: background 0.2s;
+  }
+
+  .btn-gold:hover { background: var(--gold-light); }
+
+  .restart-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    font-size: 13px;
+    color: var(--gray);
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .restart-link:hover { color: var(--green); }
+
+  /* TYPING ANIMATION */
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  .typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background: var(--gold);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 0.8s infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    animation: fadeUp 0.4s ease forwards;
+  }
+
+  /* HERO SECTION */
+  #hero-section { display: block; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">fieldworks</a>
+  <span class="nav-tag">Free Assessment</span>
+</nav>
+
+<!-- HERO -->
+<div id="hero-section">
+  <div class="hero">
+    <h1>How much is your <span>paperwork</span> costing you?</h1>
+    <p>Answer 6 questions about how your operation runs today. We'll show you exactly where time and money are slipping through the cracks.</p>
+
+    <!-- ANIMATED PREVIEW -->
+    <div class="preview-wrap">
+      <div class="preview-label">Here's what your report looks like</div>
+      <div class="preview-url">myfieldworks.com/assessment</div>
+      <div class="preview-card">
+        <div class="preview-company">Trinity Engineering & Inspection · 12 field techs</div>
+        <div class="preview-headline" id="preview-headline">
+          TEI is losing an estimated <span class="highlight" id="preview-hours">—</span> hours/week to manual processes<span class="typing-cursor"></span>
+        </div>
+        <div class="preview-stats">
+          <div class="stat-box">
+            <span class="stat-num" id="stat-processes">—</span>
+            <span class="stat-label">paper processes identified</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num" id="stat-reentry">—</span>
+            <span class="stat-label">hrs/wk on re-entry alone</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num" id="stat-cost">—</span>
+            <span class="stat-label">est. monthly labor cost</span>
+          </div>
+        </div>
+        <div class="preview-processes" id="preview-processes"></div>
+      </div>
+    </div>
+
+    <button class="btn-primary" onclick="startAssessment()">My Fieldworks Report →</button>
+    <div style="margin-top:12px; font-size:13px; color:var(--gray);">Takes about 60 seconds. No email required.</div>
+  </div>
+</div>
+
+<!-- ASSESSMENT -->
+<div class="assessment-section" id="assessment-section">
+
+  <div class="progress-bar-wrap">
+    <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+  </div>
+
+  <!-- Q1: Paper processes -->
+  <div id="q1" class="fade-up">
+    <div class="q-number">Question 1 of 6</div>
+    <div class="q-text">What processes run on paper or manual entry at your company today?</div>
+    <div class="multi-grid" id="q1-options">
+      <button class="multi-btn" data-value="timecards" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Timecards / Hours
+      </button>
+      <button class="multi-btn" data-value="field-reports" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Field Reports / Daily Logs
+      </button>
+      <button class="multi-btn" data-value="equipment" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Equipment Inspections
+      </button>
+      <button class="multi-btn" data-value="material-orders" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Material Orders
+      </button>
+      <button class="multi-btn" data-value="scheduling" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Job Scheduling
+      </button>
+      <button class="multi-btn" data-value="safety" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Safety Checklists
+      </button>
+      <button class="multi-btn" data-value="invoicing" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Customer Invoicing
+      </button>
+      <button class="multi-btn" data-value="test-logs" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Material / Test Logs
+      </button>
+      <button class="multi-btn" data-value="delivery" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Delivery Receipts
+      </button>
+      <button class="multi-btn" data-value="other" onclick="toggleMulti(this,'q1')">
+        <span class="opt-check square"></span> Other
+      </button>
+    </div>
+    <button class="next-btn" onclick="nextQ(1)" id="next1" disabled>Continue →</button>
+  </div>
+
+  <!-- Q2: Re-entry -->
+  <div id="q2" style="display:none">
+    <div class="q-number">Question 2 of 6</div>
+    <div class="q-text">Does someone have to re-enter that information into a computer or system later?</div>
+    <div class="options-grid">
+      <button class="option-btn" data-value="always" onclick="selectSingle(this,'q2')">
+        <span class="opt-check"></span> Yes — always. Someone re-enters it at the office or end of day.
+      </button>
+      <button class="option-btn" data-value="sometimes" onclick="selectSingle(this,'q2')">
+        <span class="opt-check"></span> Sometimes — depends on the process or the person.
+      </button>
+      <button class="option-btn" data-value="rarely" onclick="selectSingle(this,'q2')">
+        <span class="opt-check"></span> Rarely — most of it stays on paper.
+      </button>
+    </div>
+    <button class="next-btn" onclick="nextQ(2)" id="next2" disabled>Continue →</button>
+  </div>
+
+  <!-- Q3: Communication -->
+  <div id="q3" style="display:none">
+    <div class="q-number">Question 3 of 6</div>
+    <div class="q-text">When something changes or needs to get to your team, how does that typically happen?</div>
+    <div class="options-grid">
+      <button class="option-btn" data-value="text-call" onclick="selectSingle(this,'q3')">
+        <span class="opt-check"></span> Group text or phone call — it works but it's constant.
+      </button>
+      <button class="option-btn" data-value="email" onclick="selectSingle(this,'q3')">
+        <span class="opt-check"></span> Email — though not everyone checks it reliably.
+      </button>
+      <button class="option-btn" data-value="on-site" onclick="selectSingle(this,'q3')">
+        <span class="opt-check"></span> They find out when they show up on site.
+      </button>
+      <button class="option-btn" data-value="system" onclick="selectSingle(this,'q3')">
+        <span class="opt-check"></span> We have a system and it works well.
+      </button>
+      <button class="option-btn" data-value="inconsistent" onclick="selectSingle(this,'q3')">
+        <span class="opt-check"></span> It depends.
+      </button>
+    </div>
+    <button class="next-btn" onclick="nextQ(3)" id="next3" disabled>Continue →</button>
+  </div>
+
+  <!-- Q4: Accuracy -->
+  <div id="q4" style="display:none">
+    <div class="q-number">Question 4 of 6</div>
+    <div class="q-text">Has incorrect information from a paper process or re-entry error ever caused a real problem for your business?</div>
+    <div class="options-grid">
+      <button class="option-btn" data-value="costly" onclick="selectSingle(this,'q4')">
+        <span class="opt-check"></span> Yes — and it was costly.
+      </button>
+      <button class="option-btn" data-value="caught" onclick="selectSingle(this,'q4')">
+        <span class="opt-check"></span> Yes — but we caught it in time.
+      </button>
+      <button class="option-btn" data-value="probably" onclick="selectSingle(this,'q4')">
+        <span class="opt-check"></span> Probably — but we never tracked it.
+      </button>
+      <button class="option-btn" data-value="unknown" onclick="selectSingle(this,'q4')">
+        <span class="opt-check"></span> Not that I know of.
+      </button>
+    </div>
+    <button class="next-btn" onclick="nextQ(4)" id="next4" disabled>Continue →</button>
+  </div>
+
+  <!-- Q5: Cracks -->
+  <div id="q5" style="display:none">
+    <div class="q-number">Question 5 of 6</div>
+    <div class="q-text">How often do things fall through the cracks because of how information is shared today?</div>
+    <div class="options-grid">
+      <button class="option-btn" data-value="daily" onclick="selectSingle(this,'q5')">
+        <span class="opt-check"></span> Daily — it's a constant issue.
+      </button>
+      <button class="option-btn" data-value="weekly" onclick="selectSingle(this,'q5')">
+        <span class="opt-check"></span> Weekly — enough to be frustrating.
+      </button>
+      <button class="option-btn" data-value="monthly" onclick="selectSingle(this,'q5')">
+        <span class="opt-check"></span> Monthly — rare but costly when it happens.
+      </button>
+      <button class="option-btn" data-value="rarely" onclick="selectSingle(this,'q5')">
+        <span class="opt-check"></span> Rarely — we've mostly figured it out.
+      </button>
+    </div>
+    <button class="next-btn" onclick="nextQ(5)" id="next5" disabled>Continue →</button>
+  </div>
+
+  <!-- Q6: Team size -->
+  <div id="q6" style="display:none">
+    <div class="q-number">Question 6 of 6</div>
+    <div class="q-text">How many people are in your operation?</div>
+    <div class="options-grid">
+      <button class="option-btn" data-value="1-5" onclick="selectSingle(this,'q6')">
+        <span class="opt-check"></span> 1–5 people
+      </button>
+      <button class="option-btn" data-value="6-15" onclick="selectSingle(this,'q6')">
+        <span class="opt-check"></span> 6–15 people
+      </button>
+      <button class="option-btn" data-value="16-30" onclick="selectSingle(this,'q6')">
+        <span class="opt-check"></span> 16–30 people
+      </button>
+      <button class="option-btn" data-value="30+" onclick="selectSingle(this,'q6')">
+        <span class="opt-check"></span> 30+ people
+      </button>
+    </div>
+    <button class="next-btn" onclick="showResults()" id="next6" disabled>My Fieldworks Report →</button>
+  </div>
+
+</div>
+
+<!-- RESULTS -->
+<div class="results-section" id="results-section">
+  <div class="report-header">
+    <div class="report-tag">Your Fieldworks Report</div>
+    <div class="report-headline" id="result-headline">Your operation is losing <span class="red" id="result-hours">—</span> hours/week to processes that could be digitized.</div>
+    <div class="report-sub" id="result-sub">Based on your answers — here's where the time is going.</div>
+    <div class="report-stats">
+      <div class="r-stat">
+        <span class="r-stat-num" id="r-processes">—</span>
+        <span class="r-stat-label">manual processes identified</span>
+      </div>
+      <div class="r-stat">
+        <span class="r-stat-num" id="r-hours">—</span>
+        <span class="r-stat-label">hours/week recoverable</span>
+      </div>
+      <div class="r-stat">
+        <span class="r-stat-num" id="r-cost">—</span>
+        <span class="r-stat-label">est. monthly cost</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-card-title">Where your time is going</div>
+    <div id="process-breakdown"></div>
+  </div>
+
+  <div class="result-card">
+    <div class="result-card-title">What this means for your operation</div>
+    <div id="insights-text" style="font-size:15px; line-height:1.7; color:var(--gray)"></div>
+  </div>
+
+  <div class="cta-card">
+    <h3>Ready to see what's possible?</h3>
+    <p>We built this for our own construction company first. Then our clients started asking. Now we can build for you.</p>
+    <button class="btn-gold" onclick="window.location.href='mailto:hello@myfieldworks.com?subject=Fieldworks Report — Let\'s Talk'">Book a 30-Minute Call →</button>
+    <div style="margin-top:12px; font-size:12px; color:rgba(247,244,239,0.5);">No pitch. Just a conversation about your operation.</div>
+  </div>
+
+  <div class="restart-link" onclick="restartAssessment()">← Start over</div>
+</div>
+
+<script>
+  // State
+  const answers = { q1: [], q2: null, q3: null, q4: null, q5: null, q6: null };
+
+  const processLabels = {
+    'timecards': { label: 'Timecards / Hours', icon: '🕐', hrs: 3.5 },
+    'field-reports': { label: 'Field Reports / Logs', icon: '📋', hrs: 2.5 },
+    'equipment': { label: 'Equipment Inspections', icon: '🔧', hrs: 2.0 },
+    'material-orders': { label: 'Material Orders', icon: '📦', hrs: 1.5 },
+    'scheduling': { label: 'Job Scheduling', icon: '📅', hrs: 3.0 },
+    'safety': { label: 'Safety Checklists', icon: '⛑️', hrs: 1.5 },
+    'invoicing': { label: 'Customer Invoicing', icon: '💳', hrs: 2.0 },
+    'test-logs': { label: 'Material / Test Logs', icon: '🧪', hrs: 3.0 },
+    'delivery': { label: 'Delivery Receipts', icon: '🚛', hrs: 1.5 },
+    'other': { label: 'Other Processes', icon: '📌', hrs: 2.0 }
+  };
+
+  // ANIMATED PREVIEW
+  const previewData = [
+    { key: 'test-logs', label: 'Field Test Logs', hrs: 16, width: 90 },
+    { key: 'timecards', label: 'Timecards', hrs: 10, width: 60 },
+    { key: 'field-reports', label: 'Daily Reports', hrs: 8, width: 48 },
+    { key: 'equipment', label: 'Equipment Checks', hrs: 4, width: 28 },
+  ];
+
+  let previewStep = 0;
+  const previewSteps = [
+    () => {
+      document.getElementById('preview-hours').textContent = '—';
+      document.getElementById('stat-processes').textContent = '—';
+      document.getElementById('stat-reentry').textContent = '—';
+      document.getElementById('stat-cost').textContent = '—';
+      document.getElementById('preview-processes').innerHTML = '';
+    },
+    () => {
+      document.getElementById('stat-processes').textContent = '4';
+    },
+    () => {
+      document.getElementById('preview-hours').textContent = '38';
+      document.getElementById('stat-reentry').textContent = '14';
+    },
+    () => {
+      document.getElementById('stat-cost').textContent = '$4.8K';
+    },
+    () => {
+      const container = document.getElementById('preview-processes');
+      container.innerHTML = '';
+      previewData.forEach((p, i) => {
+        const row = document.createElement('div');
+        row.className = 'process-row';
+        row.innerHTML = `
+          <span class="process-name"><span class="process-dot"></span>${p.label}</span>
+          <div class="process-bar-wrap"><div class="process-bar" id="pbar-${i}"></div></div>
+          <span class="process-hrs">${p.hrs}h</span>
+        `;
+        container.appendChild(row);
+        setTimeout(() => {
+          const bar = document.getElementById(`pbar-${i}`);
+          if (bar) bar.style.width = p.width + '%';
+        }, 100 + i * 150);
+      });
+    }
+  ];
+
+  function runPreviewAnimation() {
+    if (previewStep < previewSteps.length) {
+      previewSteps[previewStep]();
+      previewStep++;
+      setTimeout(runPreviewAnimation, previewStep === 1 ? 600 : previewStep === 5 ? 800 : 900);
+    } else {
+      setTimeout(() => {
+        previewStep = 0;
+        previewSteps[0]();
+        setTimeout(runPreviewAnimation, 1200);
+      }, 4000);
+    }
+  }
+
+  setTimeout(runPreviewAnimation, 800);
+
+  // ASSESSMENT LOGIC
+  function startAssessment() {
+    document.getElementById('hero-section').style.display = 'none';
+    document.getElementById('assessment-section').classList.add('active');
+    updateProgress(1);
+  }
+
+  function updateProgress(q) {
+    const pct = ((q - 1) / 6) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+  }
+
+  function toggleMulti(btn, q) {
+    btn.classList.toggle('selected');
+    const check = btn.querySelector('.opt-check');
+    check.style.background = btn.classList.contains('selected') ? 'var(--green)' : '';
+    check.style.borderColor = btn.classList.contains('selected') ? 'var(--green)' : '';
+
+    answers[q] = Array.from(document.querySelectorAll(`#${q}-options .multi-btn.selected`))
+      .map(b => b.dataset.value);
+
+    document.getElementById(`next${q.replace('q','')}`).disabled = answers[q].length === 0;
+  }
+
+  function selectSingle(btn, q) {
+    document.querySelectorAll(`#${q} .option-btn`).forEach(b => {
+      b.classList.remove('selected');
+      b.querySelector('.opt-check').style.background = '';
+      b.querySelector('.opt-check').style.borderColor = '';
+    });
+    btn.classList.add('selected');
+    btn.querySelector('.opt-check').style.background = 'var(--green)';
+    btn.querySelector('.opt-check').style.borderColor = 'var(--green)';
+    answers[q] = btn.dataset.value;
+    const num = q.replace('q','');
+    const nextBtn = document.getElementById(`next${num}`);
+    if (nextBtn) nextBtn.disabled = false;
+  }
+
+  function nextQ(current) {
+    document.getElementById(`q${current}`).style.display = 'none';
+    const next = current + 1;
+    const nextEl = document.getElementById(`q${next}`);
+    if (nextEl) {
+      nextEl.style.display = 'block';
+      nextEl.classList.add('fade-up');
+      updateProgress(next);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function showResults() {
+    document.getElementById('assessment-section').classList.remove('active');
+    document.getElementById('results-section').classList.add('active');
+
+    const selectedProcesses = answers.q1;
+    const reentry = answers.q2;
+    const accuracy = answers.q4;
+    const frequency = answers.q5;
+    const teamSize = answers.q6;
+
+    // Calculate hours
+    let baseHours = selectedProcesses.reduce((sum, p) => sum + (processLabels[p]?.hrs || 2), 0);
+    let multiplier = 1;
+    if (reentry === 'always') multiplier = 1.4;
+    else if (reentry === 'sometimes') multiplier = 1.2;
+
+    let sizeMultiplier = 1;
+    if (teamSize === '6-15') sizeMultiplier = 1.5;
+    else if (teamSize === '16-30') sizeMultiplier = 2.2;
+    else if (teamSize === '30+') sizeMultiplier = 3.0;
+
+    const totalHours = Math.round(baseHours * multiplier * sizeMultiplier);
+    const reentryHours = Math.round(totalHours * 0.35);
+    const monthlyCost = Math.round((totalHours * 4.3 * 28) / 100) * 100;
+
+    document.getElementById('result-hours').textContent = totalHours;
+    document.getElementById('r-processes').textContent = selectedProcesses.length;
+    document.getElementById('r-hours').textContent = totalHours;
+    document.getElementById('r-cost').textContent = `$${(monthlyCost/1000).toFixed(1)}K`;
+
+    // Process breakdown with bar charts
+    const breakdown = document.getElementById('process-breakdown');
+    breakdown.innerHTML = '';
+    const maxHrs = Math.max(...selectedProcesses.map(p => {
+      const info = processLabels[p];
+      return info ? Math.round(info.hrs * multiplier * sizeMultiplier * 10) / 10 : 0;
+    }));
+
+    selectedProcesses.forEach((p, index) => {
+      const info = processLabels[p];
+      if (!info) return;
+      const hrs = Math.round(info.hrs * multiplier * sizeMultiplier * 10) / 10;
+      const pct = Math.round((hrs / maxHrs) * 100);
+      const row = document.createElement('div');
+      row.className = 'process-result-row';
+      row.innerHTML = `
+        <div class="process-result-top">
+          <span class="process-result-name">${info.label}</span>
+          <span class="process-result-hrs">${hrs}h/wk</span>
+        </div>
+        <div class="process-bar-track">
+          <div class="process-bar-fill" id="rbar-${index}"></div>
+        </div>
+      `;
+      breakdown.appendChild(row);
+      setTimeout(() => {
+        const bar = document.getElementById(`rbar-${index}`);
+        if (bar) bar.style.width = pct + '%';
+      }, 100 + index * 100);
+    });
+
+    // Insights
+    const insightsEl = document.getElementById('insights-text');
+    let insight = `Your operation is running ${selectedProcesses.length} manual processes that create an estimated ${totalHours} hours per week of recoverable time — that's roughly $${monthlyCost.toLocaleString()}/month in labor that isn't adding value to your jobs or your clients.`;
+
+    if (frequency === 'daily') {
+      insight += ` With things falling through the cracks daily, your team is spending real energy on coordination that a connected system would eliminate.`;
+    } else if (frequency === 'weekly') {
+      insight += ` Weekly breakdowns in information flow are a signal that the paper system has hit its ceiling for your operation size.`;
+    }
+
+    if (reentry === 'always') {
+      insight += ` The fact that everything gets re-entered manually is your biggest single opportunity — eliminate that step and you recover time immediately, with better accuracy.`;
+    }
+
+    insightsEl.innerHTML = insight;
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function restartAssessment() {
+    answers.q1 = []; answers.q2 = null; answers.q3 = null;
+    answers.q4 = null; answers.q5 = null; answers.q6 = null;
+
+    document.getElementById('results-section').classList.remove('active');
+    document.getElementById('hero-section').style.display = 'block';
+
+    // Reset all questions
+    for (let i = 1; i <= 6; i++) {
+      const q = document.getElementById(`q${i}`);
+      if (q) {
+        q.style.display = i === 1 ? 'block' : 'none';
+        q.querySelectorAll('.option-btn, .multi-btn').forEach(b => {
+          b.classList.remove('selected');
+          const check = b.querySelector('.opt-check');
+          if (check) { check.style.background = ''; check.style.borderColor = ''; }
+        });
+        const nextBtn = document.getElementById(`next${i}`);
+        if (nextBtn) nextBtn.disabled = true;
+      }
+    }
+
+    document.getElementById('assessment-section').classList.remove('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+</script>
+</body>
+</html>
