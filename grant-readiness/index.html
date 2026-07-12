@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grant Readiness Intake — Fieldworks</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1E3D2B; --green-mid: #2D5A3D; --green-deep: #16291D;
+    --gold: #C9A84C; --gold-light: #E8C96A; --cream: #F7F4EF;
+    --charcoal: #1A1A1A; --gray: #6B7280; --gray-light: #E5E1DA; --white: #FFFFFF;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--charcoal); overflow-x: hidden; }
+  a { text-decoration: none; color: inherit; }
+
+  nav {
+    padding: 18px 32px; display: flex; align-items: center; justify-content: space-between;
+    background: rgba(247,244,239,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(30,61,43,0.08);
+  }
+  .logo { font-family: 'Pacifico', cursive; font-size: 30px; color: var(--green); }
+  .nav-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 4px 12px; border-radius: 20px; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 56px 24px 90px; }
+
+  .a-hero { text-align: center; margin-bottom: 44px; }
+  .a-hero .eyebrow { font-size: 12px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 18px; }
+  .a-hero h1 { font-size: clamp(30px, 5vw, 46px); font-weight: 800; color: var(--green); line-height: 1.14; letter-spacing: -0.03em; margin-bottom: 18px; }
+  .a-hero h1 .accent { color: var(--gold); }
+  .a-hero p { font-size: 17px; color: var(--gray); line-height: 1.6; max-width: 540px; margin: 0 auto; }
+
+  .progress-wrap { margin-bottom: 28px; }
+  .progress-meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--gray); margin-bottom: 8px; font-weight: 600; }
+  .progress-bar { height: 6px; background: var(--gray-light); border-radius: 6px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--gold); border-radius: 6px; width: 0%; transition: width 0.4s ease; }
+
+  .q-card { background: var(--white); border: 1px solid var(--gray-light); border-radius: 18px; padding: 36px 32px; animation: fadeUp 0.4s ease; }
+  .q-label { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+  .q-title { font-size: 22px; font-weight: 800; color: var(--green); line-height: 1.3; margin-bottom: 6px; letter-spacing: -0.01em; }
+  .q-hint { font-size: 13.5px; color: var(--gray); margin-bottom: 24px; }
+
+  .opt {
+    display: flex; align-items: center; gap: 12px; background: var(--cream);
+    border: 1.5px solid var(--gray-light); border-radius: 12px; padding: 15px 18px; margin-bottom: 10px;
+    cursor: pointer; font-size: 15px; font-weight: 500; color: var(--charcoal);
+    transition: border-color 0.15s, background 0.15s; text-align: left; width: 100%; font-family: 'Inter', sans-serif;
+  }
+  .opt:hover { border-color: var(--gold); }
+  .opt.selected { border-color: var(--green); background: rgba(30,61,43,0.05); }
+  .opt-check { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--gray-light); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 11px; color: var(--white); transition: all 0.15s; }
+  .opt.selected .opt-check { background: var(--green); border-color: var(--green); }
+  .opt.multi .opt-check { border-radius: 5px; }
+
+  .q-textarea {
+    width: 100%; min-height: 120px; padding: 15px 18px; border: 1.5px solid var(--gray-light);
+    border-radius: 12px; font-size: 15px; font-family: 'Inter', sans-serif; color: var(--charcoal);
+    line-height: 1.5; resize: vertical; background: var(--cream);
+  }
+  .q-textarea:focus { outline: none; border-color: var(--gold); }
+
+  .q-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; }
+  .q-back { font-size: 14px; color: var(--gray); font-weight: 600; cursor: pointer; background: none; border: none; font-family: 'Inter', sans-serif; }
+  .q-back:hover { color: var(--green); }
+  .q-next { background: var(--green); color: var(--cream); font-weight: 700; font-size: 15px; padding: 13px 28px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; opacity: 0.4; pointer-events: none; transition: opacity 0.2s; }
+  .q-next.ready { opacity: 1; pointer-events: auto; }
+
+  .results { display: none; }
+  .results.show { display: block; animation: fadeUp 0.5s ease; }
+  .results-intro { text-align: center; margin-bottom: 32px; }
+  .results-intro .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; }
+  .results-intro h2 { font-size: clamp(26px, 4vw, 36px); font-weight: 800; color: var(--green); letter-spacing: -0.02em; line-height: 1.2; }
+
+  .reflect-card { background: var(--white); border: 1px solid var(--gray-light); border-radius: 16px; padding: 30px 30px 12px; margin-bottom: 20px; opacity: 0; transform: translateY(16px); position: relative; overflow: hidden; }
+  .reflect-card.in { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .reflect-card::after {
+    content: ''; position: absolute; left: 0; bottom: 0; height: 3px; width: 0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  }
+  .reflect-card.sealed::after { width: 100%; transition: width 0.7s cubic-bezier(0.22,1,0.36,1); }
+  .reflect-row { display: flex; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--gray-light); opacity: 0; transform: translateY(10px); }
+  .reflect-row.rin { opacity: 1; transform: translateY(0); transition: opacity 0.45s ease, transform 0.45s ease; }
+  .reflect-row:last-child { border-bottom: none; }
+  .reflect-k { font-size: 12.5px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--gold); flex-shrink: 0; width: 150px; padding-top: 2px; opacity: 0; transform: translateX(-6px); }
+  .reflect-row.rin .reflect-k { opacity: 1; transform: translateX(0); transition: opacity 0.4s ease 0.08s, transform 0.4s ease 0.08s; }
+  .reflect-v { font-size: 15px; color: var(--charcoal); line-height: 1.5; font-weight: 500; }
+  .reflect-v .muted { color: var(--gray); font-weight: 400; font-style: italic; }
+  .reflect-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .reflect-chip { background: rgba(30,61,43,0.06); border: 1px solid var(--gray-light); border-radius: 16px; padding: 4px 12px; font-size: 13px; color: var(--green); font-weight: 600; opacity: 0; transform: scale(0.7); }
+  .reflect-chip.cin { opacity: 1; transform: scale(1); transition: opacity 0.35s ease, transform 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+
+  .whats-next { background: var(--green); border-radius: 16px; padding: 30px 28px; margin-bottom: 20px; opacity: 0; transform: translateY(16px); }
+  .whats-next.in { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .whats-next h3 { color: var(--cream); font-family: 'Pacifico', cursive; font-size: 26px; font-weight: 400; margin-bottom: 12px; line-height: 1.2; }
+  .whats-next p { color: rgba(247,244,239,0.8); font-size: 14.5px; line-height: 1.6; }
+
+  .fork { background: var(--white); border: 1px solid var(--gray-light); border-radius: 16px; padding: 32px 30px; margin-bottom: 20px; opacity: 0; transform: translateY(16px); }
+  .fork.in { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .fork h3 { font-size: 18px; font-weight: 800; color: var(--green); margin-bottom: 6px; }
+  .fork > p { font-size: 14px; color: var(--gray); margin-bottom: 20px; line-height: 1.55; }
+  .fork-row { display: flex; gap: 10px; margin-bottom: 14px; }
+  .fork-row input { flex: 1; padding: 13px 15px; border: 1.5px solid var(--gray-light); border-radius: 8px; font-size: 15px; font-family: 'Inter', sans-serif; color: var(--charcoal); }
+  .fork-row input:focus { outline: none; border-color: var(--gold); }
+  .fork-send { background: var(--gold); color: var(--green); font-weight: 700; font-size: 15px; padding: 13px 26px; border-radius: 8px; border: none; cursor: pointer; font-family: 'Inter', sans-serif; white-space: nowrap; }
+  .fork-skip { display: block; margin: 0 auto; font-size: 14px; color: var(--gray); font-weight: 600; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; text-decoration: underline; text-underline-offset: 3px; }
+  .fork-skip:hover { color: var(--green); }
+
+  .sent { display: none; text-align: center; padding: 20px 0 4px; }
+  .sent.show { display: block; animation: fadeUp 0.5s ease; }
+  .sent-check { width: 72px; height: 72px; border-radius: 50%; background: var(--green); color: var(--cream); font-size: 36px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; transform: scale(0); animation: popCheck 0.55s cubic-bezier(0.34,1.56,0.64,1) 0.15s forwards; }
+  @keyframes popCheck { to { transform: scale(1); } }
+  .sent h3 { font-size: 24px; font-weight: 800; color: var(--green); margin-bottom: 10px; }
+  .sent p { font-size: 15px; color: var(--gray); line-height: 1.6; max-width: 420px; margin: 0 auto; }
+
+  .a-cta { text-align: center; background: var(--white); border: 1px solid var(--gray-light); border-radius: 18px; padding: 40px 32px; opacity: 0; transform: translateY(16px); }
+  .a-cta.in { opacity: 1; transform: translateY(0); transition: opacity 0.6s ease, transform 0.6s ease; }
+  .a-cta h2 { font-size: 28px; font-weight: 800; color: var(--green); letter-spacing: -0.02em; margin-bottom: 12px; }
+  .a-cta h2 .accent { color: var(--gold); }
+  .a-cta > p { font-size: 15.5px; color: var(--gray); max-width: 440px; margin: 0 auto 26px; line-height: 1.6; }
+  .cta-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--green); font-weight: 700; font-size: 16px; padding: 16px 34px; border-radius: 8px; cursor: pointer; border: none; font-family: 'Inter', sans-serif; margin-bottom: 16px; }
+  .cta-reassure { font-size: 13.5px; color: var(--gray); font-style: italic; }
+
+  .start-over { display: block; margin: 28px auto 0; font-size: 14px; color: var(--gray); font-weight: 600; background: none; border: none; cursor: pointer; font-family: 'Inter', sans-serif; }
+  .start-over:hover { color: var(--green); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="logo">fieldworks</a>
+  <span class="nav-sub">Grant Advisory</span>
+</nav>
+
+<div class="wrap">
+
+  <div class="a-hero" id="hero">
+    <div class="eyebrow">Grant Readiness Intake</div>
+    <h1>What type of <span class="accent">support</span> do you need?</h1>
+    <p>Answer a few quick questions about your organization and what you're hoping to fund. We'll map where you are — and what kind of support actually fits. About 90 seconds.</p>
+  </div>
+
+  <div id="intake">
+    <div class="progress-wrap">
+      <div class="progress-meta"><span id="progLabel">Question 1 of 8</span><span id="progPct">0%</span></div>
+      <div class="progress-bar"><div class="progress-fill" id="progFill"></div></div>
+    </div>
+    <div id="qContainer"></div>
+  </div>
+
+  <div class="results" id="results">
+    <div class="results-intro">
+      <div class="eyebrow">What we're hearing</div>
+      <h2>Here's where you are.</h2>
+    </div>
+
+    <div class="reflect-card" id="reflectCard"></div>
+
+    <div class="whats-next" id="whatsNext">
+      <h3>You've taken the first step</h3>
+      <p>Knowing where you stand is where every strong funding strategy begins. From here, it's about matching you to the right opportunities and the right level of support — and that's the conversation we'd love to have.</p>
+    </div>
+
+    <div class="fork" id="forkBlock">
+      <h3>Want a copy of this?</h3>
+      <p>Drop your email and we'll send you a copy of your snapshot — and Natalie will have it in hand when you're ready to talk. Prefer to keep it private? Hit no thanks below.</p>
+      <div class="fork-row">
+        <input type="email" id="forkEmail" placeholder="you@organization.org">
+        <button class="fork-send" onclick="sendCopy()">Send my copy →</button>
+      </div>
+      <button class="fork-skip" onclick="skipEmail()">No thanks</button>
+    </div>
+
+    <div class="sent" id="sentBlock">
+      <div class="sent-check">✓</div>
+      <h3>Sent — check your inbox</h3>
+      <p>Your snapshot is on its way, and Natalie has a copy too. She'll be in touch, or reach out anytime at hello@myfieldworks.com.</p>
+    </div>
+
+    <div class="a-cta" id="ctaBlock">
+      <h2>Ready to see <span class="accent">what's possible?</span></h2>
+      <p>This snapshot is just the start. Let's turn it into a real plan, for your organization and your goals.</p>
+      <button class="cta-btn" id="emailBtn">Start the conversation →</button>
+      <div class="cta-reassure">No pitch. Just a conversation about your needs.</div>
+    </div>
+
+    <button class="start-over" onclick="restart()">← Start over</button>
+  </div>
+
+</div>
+
+<form name="grant-intake" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="text" name="bot-field" />
+  <input type="email" name="email" />
+  <input type="text" name="orgType" />
+  <input type="text" name="focus" />
+  <input type="text" name="budget" />
+  <input type="text" name="location" />
+  <input type="text" name="readiness" />
+  <input type="text" name="capacity" />
+  <input type="text" name="engagement" />
+  <textarea name="goal"></textarea>
+</form>
+
+<script>
+  const questions = [
+    {
+      label: 'About your organization', title: 'What type of organization are you?',
+      key: 'orgType', multi: false,
+      options: [
+        { t: 'Nonprofit (501c3)', v: 'Nonprofit (501c3)' },
+        { t: 'Government or tribal entity', v: 'Government or tribal entity' },
+        { t: 'Healthcare or hospital', v: 'Healthcare or hospital' },
+        { t: 'Educational institution', v: 'Educational institution' },
+        { t: 'For-profit with a social mission', v: 'For-profit with social mission' },
+        { t: 'Small business', v: 'Small business' },
+        { t: 'Individual', v: 'Individual' },
+        { t: 'Not sure / still forming', v: 'Not sure / still forming' },
+      ]
+    },
+    {
+      label: 'Where you\u2019re based', title: 'Where are you located, and do you have a website?',
+      hint: 'City and state is plenty \u2014 and drop your website if you have one, so we can learn more about your work.',
+      key: 'location', freetext: true,
+      placeholder: 'e.g. Redding, CA \u2014 www.ourorganization.org',
+    },
+    {
+      label: 'Your focus', title: 'What\u2019s your primary focus area?',
+      hint: 'Select all that apply.', key: 'focus', multi: true, randomize: true,
+      options: [
+        { t: 'Maternal, child & family health', v: 'Maternal, child & family health' },
+        { t: 'Early childhood development', v: 'Early childhood development' },
+        { t: 'Behavioral health & substance use', v: 'Behavioral health & substance use' },
+        { t: 'Healthcare', v: 'Healthcare' },
+        { t: 'Social services (housing, food security, etc.)', v: 'Social services' },
+        { t: 'Health workforce & capacity building', v: 'Health workforce & capacity building' },
+        { t: 'Crisis & emergency services', v: 'Crisis & emergency services' },
+        { t: 'Education', v: 'Education' },
+        { t: 'Ministry', v: 'Ministry' },
+        { t: 'Climate, environment & sustainability', v: 'Climate, environment & sustainability' },
+        { t: 'Community & economic development', v: 'Community & economic development' },
+        { t: 'Arts, culture & humanities', v: 'Arts, culture & humanities' },
+        { t: 'Other', v: 'Other' },
+      ]
+    },
+    {
+      label: 'Your scale', title: 'What\u2019s your annual operating budget?',
+      key: 'budget', multi: false,
+      options: [
+        { t: 'Under $250K', v: 'Under $250K' },
+        { t: '$250K \u2013 $500K', v: '$250K-$500K' },
+        { t: '$500K \u2013 $1M', v: '$500K-$1M' },
+        { t: '$1M \u2013 $5M', v: '$1M-$5M' },
+        { t: '$5M+', v: '$5M+' },
+        { t: 'Not sure', v: 'Not sure' },
+      ]
+    },
+    {
+      label: 'Your foundation', title: 'Which of these do you currently have in place?',
+      hint: 'Select all that apply. This just helps us understand your starting point \u2014 there\u2019s no wrong answer.',
+      key: 'readiness', multi: true,
+      options: [
+        { t: '501(c)(3) status or equivalent', v: '501(c)(3) or equivalent' },
+        { t: 'EIN (federal tax ID)', v: 'EIN' },
+        { t: 'Board or governing body', v: 'Board/governing body' },
+        { t: 'Current budget document', v: 'Budget document' },
+        { t: 'Audited financials or statements', v: 'Audited financials/statements' },
+        { t: 'Program descriptions or logic model', v: 'Program descriptions/logic model' },
+        { t: 'Prior grant experience', v: 'Prior grant experience' },
+      ]
+    },
+    {
+      label: 'Your capacity', title: 'How much can you support the grant work right now?',
+      key: 'capacity', multi: false,
+      options: [
+        { t: 'I can be heavily involved and responsive', v: 'Heavily involved' },
+        { t: 'Moderate bandwidth \u2014 I\u2019ll need guidance', v: 'Moderate, needs guidance' },
+        { t: 'Limited \u2014 I need you to lead most of the work', v: 'Limited, needs us to lead' },
+      ]
+    },
+    {
+      label: 'Level of support', title: 'What level of engagement are you anticipating?',
+      key: 'engagement', multi: false,
+      options: [
+        { t: 'Light touch', v: 'Light touch' },
+        { t: 'Moderate', v: 'Moderate' },
+        { t: 'Full support', v: 'Full support' },
+        { t: 'Project specific', v: 'Project specific' },
+        { t: 'Not sure \u2014 I\u2019d like your recommendation', v: 'Not sure, wants recommendation' },
+      ]
+    },
+    {
+      label: 'In your words', title: 'What are you hoping to fund, and what\u2019s driving the timing?',
+      hint: 'A sentence or two is plenty. If you already have a specific grant or opportunity in mind, drop the name or link here too \u2014 this is the most useful thing you can tell us.',
+      key: 'goal', freetext: true,
+      placeholder: 'e.g. We\u2019re trying to fund a new after-school program before our current funding runs out this fall \u2014 and we\u2019ve had our eye on a specific grant (link if you have it).',
+    },
+  ];
+
+  // Randomize option order for flagged questions (once, on load). Keep "Other" pinned to the bottom.
+  questions.forEach(q => {
+    if (q.randomize && q.options) {
+      const other = q.options.filter(o => o.v === 'Other');
+      const rest = q.options.filter(o => o.v !== 'Other');
+      for (let i = rest.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [rest[i], rest[j]] = [rest[j], rest[i]];
+      }
+      q.options = [...rest, ...other];
+    }
+  });
+
+  let current = 0;
+  const answers = {};
+
+  function renderQuestion() {
+    const q = questions[current];
+    const total = questions.length;
+    document.getElementById('progLabel').textContent = `Question ${current + 1} of ${total}`;
+    const pct = Math.round((current / total) * 100);
+    document.getElementById('progPct').textContent = `${pct}%`;
+    document.getElementById('progFill').style.width = `${pct}%`;
+
+    let inner = '';
+    if (q.freetext) {
+      const val = answers[q.key] || '';
+      inner = `<textarea class="q-textarea" id="freetext" placeholder="${q.placeholder || ''}">${val}</textarea>`;
+    } else {
+      const existing = answers[q.key] || (q.multi ? [] : null);
+      inner = q.options.map(o => {
+        const sel = q.multi ? existing.includes(o.v) : existing === o.v;
+        return `<button class="opt ${q.multi ? 'multi' : ''} ${sel ? 'selected' : ''}" data-v="${o.v.replace(/"/g,'&quot;')}">
+          <span class="opt-check">${sel ? (q.multi ? '✓' : '●') : ''}</span><span>${o.t}</span>
+        </button>`;
+      }).join('');
+    }
+
+    document.getElementById('qContainer').innerHTML = `
+      <div class="q-card">
+        <div class="q-label">${q.label}</div>
+        <div class="q-title">${q.title}</div>
+        ${q.hint ? `<div class="q-hint">${q.hint}</div>` : '<div style="height:16px"></div>'}
+        <div id="opts">${inner}</div>
+        <div class="q-nav">
+          <button class="q-back" onclick="goBack()" ${current === 0 ? 'style="visibility:hidden"' : ''}>← Back</button>
+          <button class="q-next" id="nextBtn" onclick="goNext()">${current === total - 1 ? 'See my snapshot' : 'Next'} →</button>
+        </div>
+      </div>`;
+
+    if (q.freetext) {
+      const ta = document.getElementById('freetext');
+      ta.addEventListener('input', () => { answers[q.key] = ta.value.trim(); updateNextState(q); });
+    } else {
+      document.querySelectorAll('.opt').forEach(btn => btn.addEventListener('click', () => selectOption(q, btn.dataset.v)));
+    }
+    updateNextState(q);
+  }
+
+  function selectOption(q, v) {
+    if (q.multi) {
+      if (!answers[q.key]) answers[q.key] = [];
+      const idx = answers[q.key].indexOf(v);
+      if (idx > -1) answers[q.key].splice(idx, 1); else answers[q.key].push(v);
+    } else { answers[q.key] = v; }
+    renderQuestion();
+  }
+
+  function updateNextState(q) {
+    let has;
+    if (q.multi) has = true;
+    else if (q.freetext) has = true;
+    else has = !!answers[q.key];
+    const btn = document.getElementById('nextBtn');
+    btn.classList.toggle('ready', has);
+  }
+
+  function goNext() {
+    if (current < questions.length - 1) { current++; renderQuestion(); }
+    else showResults();
+  }
+  function goBack() { if (current > 0) { current--; renderQuestion(); } }
+
+  function showResults() {
+    document.getElementById('progFill').style.width = '100%';
+    document.getElementById('hero').style.display = 'none';
+    document.getElementById('intake').style.display = 'none';
+    document.getElementById('results').classList.add('show');
+
+    const readiness = answers.readiness || [];
+    const readinessDisplay = readiness.length
+      ? `<div class="reflect-chips">${readiness.map(r => `<span class="reflect-chip">${r}</span>`).join('')}</div>`
+      : `<span class="muted">Nothing in place yet \u2014 and that\u2019s a perfectly common place to start.</span>`;
+
+    const rows = [
+      { k: 'Organization', v: answers.orgType || '<span class="muted">\u2014</span>' },
+      { k: 'Focus area', v: (answers.focus && answers.focus.length) ? answers.focus.join(', ') : '<span class="muted">\u2014</span>' },
+      { k: 'Annual operating budget', v: answers.budget || '<span class="muted">\u2014</span>' },
+      { k: 'Location', v: answers.location ? answers.location : '<span class="muted">\u2014</span>' },
+      { k: 'In place today', v: readinessDisplay },
+      { k: 'Your capacity', v: answers.capacity || '<span class="muted">\u2014</span>' },
+      { k: 'Support level', v: answers.engagement || '<span class="muted">\u2014</span>' },
+      { k: 'Your goal', v: answers.goal ? answers.goal : '<span class="muted">\u2014</span>' },
+    ];
+
+    document.getElementById('reflectCard').innerHTML = rows.map((r, i) =>
+      `<div class="reflect-row" data-row="${i}"><div class="reflect-k">${r.k}</div><div class="reflect-v">${r.v}</div></div>`
+    ).join('');
+
+    const card = document.getElementById('reflectCard');
+    const rowEls = card.querySelectorAll('.reflect-row');
+
+    // 1) card container fades in
+    setTimeout(() => card.classList.add('in'), 150);
+
+    // 2) rows assemble top-to-bottom
+    const rowStart = 400;
+    const rowStep = 160;
+    rowEls.forEach((row, i) => {
+      setTimeout(() => {
+        row.classList.add('rin');
+        // when the readiness row lands, pop its chips in one by one
+        const chips = row.querySelectorAll('.reflect-chip');
+        chips.forEach((chip, ci) => setTimeout(() => chip.classList.add('cin'), 180 + ci * 110));
+      }, rowStart + i * rowStep);
+    });
+
+    // 3) seal the card with a gold sweep once all rows are in
+    const sealAt = rowStart + rowEls.length * rowStep + 200;
+    setTimeout(() => card.classList.add('sealed'), sealAt);
+
+    // 4) cascade the following blocks after the card completes
+    const afterCard = sealAt + 500;
+    ['whatsNext','forkBlock','ctaBlock'].forEach((id, i) =>
+      setTimeout(() => document.getElementById(id).classList.add('in'), afterCard + i * 300)
+    );
+
+    document.getElementById('emailBtn').onclick = () => {
+      const subject = encodeURIComponent('Grant Readiness \u2014 let\u2019s talk');
+      const body = encodeURIComponent(`Hi Natalie,\n\nI just filled out the Grant Readiness Intake and I\u2019d like to talk about what\u2019s possible for my organization.\n\nLooking forward to connecting.`);
+      window.location.href = `mailto:hello@myfieldworks.com?subject=${subject}&body=${body}`;
+    };
+  }
+
+  function encodeForm(data) {
+    return Object.keys(data).map(k => encodeURIComponent(k) + '=' + encodeURIComponent(data[k])).join('&');
+  }
+
+  function sendCopy() {
+    const email = document.getElementById('forkEmail').value.trim();
+    if (!email || !email.includes('@')) { alert('Please enter a valid email so we can send your copy.'); return; }
+
+    const payload = {
+      'form-name': 'grant-intake',
+      email,
+      orgType: answers.orgType || '',
+      focus: (answers.focus || []).join(', '),
+      budget: answers.budget || '',
+      location: answers.location || '',
+      readiness: (answers.readiness || []).join(', '),
+      capacity: answers.capacity || '',
+      engagement: answers.engagement || '',
+      goal: answers.goal || '',
+    };
+
+    fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: encodeForm(payload) })
+      .then(() => showSent())
+      .catch(() => showSent());
+  }
+
+  function showSent() {
+    document.getElementById('forkBlock').style.display = 'none';
+    document.getElementById('sentBlock').classList.add('show');
+  }
+
+  function skipEmail() {
+    document.getElementById('forkBlock').style.display = 'none';
+  }
+
+  function restart() {
+    current = 0;
+    for (const k in answers) delete answers[k];
+    document.getElementById('results').classList.remove('show');
+    document.getElementById('sentBlock').classList.remove('show');
+    document.getElementById('forkBlock').style.display = 'block';
+    ['reflectCard','whatsNext','forkBlock','ctaBlock'].forEach(id => document.getElementById(id).classList.remove('in'));
+    document.getElementById('reflectCard').classList.remove('sealed');
+    document.getElementById('hero').style.display = 'block';
+    document.getElementById('intake').style.display = 'block';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    renderQuestion();
+  }
+
+  renderQuestion();
+</script>
+
+</body>
+</html>
