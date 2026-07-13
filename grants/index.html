@@ -529,14 +529,15 @@
   }
 
   @media (max-width: 640px) {
-    .logo-reel-outer { padding: 28px 0; gap: 22px; }
-    .logo-reel-outer::before, .logo-reel-outer::after { width: 40px; }
-    .logo-reel-track { gap: 40px; }
-    .logo-item { height: 34px; }
-    .logo-item img { max-height: 34px; max-width: 120px; }
-    /* Faster on mobile so the shorter loop feels lively, not sluggish */
-    .logo-reel-track.left { animation-duration: 28s; }
-    .logo-reel-track.right { animation-duration: 28s; }
+    .logo-reel-outer { padding: 40px 0; gap: 22px; }
+    .logo-reel-outer::before, .logo-reel-outer::after { width: 32px; }
+    .logo-reel-track { gap: 48px; }
+    .logo-item { height: 52px; }
+    .logo-item img { max-height: 52px; max-width: 170px; }
+    /* Single row on mobile — hide the second row entirely */
+    .logo-reel-row:nth-child(2) { display: none; }
+    /* One lively row */
+    .logo-reel-track.left { animation-duration: 34s; }
   }
 
   .credibility-text { text-align: center; max-width: 700px; margin: 0 auto; }
@@ -861,12 +862,10 @@
   }
 
   const shuffled = shuffle(logos);
-  const mid = Math.ceil(shuffled.length / 2);
-  const rowA = shuffled.slice(0, mid);
-  const rowB = shuffled.slice(mid);
 
   function fillTrack(trackId, items) {
     const track = document.getElementById(trackId);
+    if (!track) return;
     const doubled = [...items, ...items]; // duplicate for seamless loop
     doubled.forEach(logo => {
       const item = document.createElement('div');
@@ -879,8 +878,15 @@
     });
   }
 
-  fillTrack('logoTrackA', rowA);
-  fillTrack('logoTrackB', rowB);
+  const isMobile = window.matchMedia('(max-width: 640px)').matches;
+  if (isMobile) {
+    // Single row on mobile — all logos in one smooth track, second row hidden via CSS
+    fillTrack('logoTrackA', shuffled);
+  } else {
+    const mid = Math.ceil(shuffled.length / 2);
+    fillTrack('logoTrackA', shuffled.slice(0, mid));
+    fillTrack('logoTrackB', shuffled.slice(mid));
+  }
 
   const revealEls = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver((entries) => {
