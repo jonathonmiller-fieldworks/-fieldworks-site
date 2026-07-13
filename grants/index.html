@@ -44,6 +44,12 @@
   }
   .logo { font-family: 'Pacifico', cursive; font-size: 30px; color: var(--green); }
   .nav-sub { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); padding: 4px 12px; border-radius: 20px; }
+  .nav-links { display: flex; align-items: center; gap: 28px; }
+  .nav-links a { font-size: 14px; font-weight: 500; color: var(--charcoal); transition: color 0.15s; }
+  .nav-links a:hover { color: var(--green); }
+  .nav-cta { background: var(--green); color: var(--cream) !important; padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 13px; transition: background 0.15s; }
+  .nav-cta:hover { background: var(--green-mid); }
+  @media (max-width: 768px) { .nav-links { gap: 16px; } .nav-links .nav-text-hide { display: none; } }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -575,8 +581,11 @@
 <body>
 
 <nav>
-  <a href="#" class="logo">fieldworks</a>
-  <span class="nav-sub">Grant Advisory</span>
+  <a href="/grants" class="logo">fieldworks</a>
+  <div class="nav-links">
+    <a href="/grants/about">Meet Natalie</a>
+    <a href="/grant-readiness" class="nav-cta">Grant Readiness Assessment</a>
+  </div>
 </nav>
 
 <!-- HERO -->
