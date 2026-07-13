@@ -507,13 +507,17 @@
   .logo-reel-row { overflow: hidden; }
   .logo-reel-track {
     display: flex; gap: 64px; width: max-content; align-items: center;
+    will-change: transform; backface-visibility: hidden;
   }
   .logo-reel-track.left { animation: scrollLeft 40s linear infinite; }
   .logo-reel-track.right { animation: scrollRight 40s linear infinite; }
-  @keyframes scrollLeft { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  @keyframes scrollRight { from { transform: translateX(-50%); } to { transform: translateX(0); } }
+  @keyframes scrollLeft { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+  @keyframes scrollRight { from { transform: translate3d(-50%,0,0); } to { transform: translate3d(0,0,0); } }
 
-  .logo-reel-outer:hover .logo-reel-track { animation-play-state: paused; }
+  @media (hover: hover) {
+    .logo-reel-outer:hover .logo-reel-track { animation-play-state: paused; }
+    .logo-reel-outer:hover .logo-item img { opacity: 0.9; }
+  }
 
   .logo-item {
     display: flex; align-items: center; justify-content: center;
@@ -523,11 +527,16 @@
     max-height: 46px; max-width: 170px; width: auto; object-fit: contain;
     opacity: 0.72; transition: opacity 0.3s ease;
   }
-  .logo-reel-outer:hover .logo-item img { opacity: 0.9; }
 
   @media (max-width: 640px) {
-    .logo-item { height: 36px; }
-    .logo-item img { max-height: 36px; max-width: 130px; }
+    .logo-reel-outer { padding: 28px 0; gap: 22px; }
+    .logo-reel-outer::before, .logo-reel-outer::after { width: 40px; }
+    .logo-reel-track { gap: 40px; }
+    .logo-item { height: 34px; }
+    .logo-item img { max-height: 34px; max-width: 120px; }
+    /* Faster on mobile so the shorter loop feels lively, not sluggish */
+    .logo-reel-track.left { animation-duration: 28s; }
+    .logo-reel-track.right { animation-duration: 28s; }
   }
 
   .credibility-text { text-align: center; max-width: 700px; margin: 0 auto; }
