@@ -71,31 +71,28 @@
   }
 
   /* JOURNEY OVAL TIMELINE */
-  .journey { margin-top: 20px; }
+  .journey { margin-top: 36px; }
   .journey-track {
-    display: flex; align-items: stretch; gap: 0; position: relative; flex-wrap: nowrap;
+    display: flex; align-items: center; gap: 0; position: relative; flex-wrap: nowrap; min-height: 70px;
   }
   .journey-node {
-    flex: 1; text-align: center; padding: 0 14px; position: relative;
+    flex: 1; text-align: center; padding: 0 16px; position: relative; z-index: 2;
+    display: flex; align-items: center; justify-content: center;
   }
-  .journey-oval {
-    border: 2px solid var(--green); border-radius: 50%;
-    aspect-ratio: 1 / 0.78; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 18px 12px; background: var(--white); position: relative; z-index: 2;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  .journey-logo-wrap {
+    background: var(--cream); padding: 0 16px; display: inline-flex; align-items: center;
+    justify-content: center; min-height: 56px; position: relative; z-index: 2;
   }
-  .journey-node:nth-child(2) .journey-oval { border-color: var(--gold); }
-  .journey-oval:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(30,61,43,0.1); }
-  .journey-role { font-size: 13.5px; font-weight: 800; color: var(--green); line-height: 1.25; margin-bottom: 4px; }
-  .journey-org { font-size: 12px; color: var(--gray); line-height: 1.3; }
+  .journey-logo { max-height: 46px; max-width: 100%; width: auto; object-fit: contain; }
+  .journey-logo.tall { max-height: 58px; }
   .journey-connector {
-    position: absolute; top: 50%; left: -8%; width: 116%; height: 2px;
+    position: absolute; top: 50%; left: -8%; width: 116%; height: 2px; transform: translateY(-1px);
     background: repeating-linear-gradient(90deg, var(--gray-light) 0 8px, transparent 8px 16px);
     z-index: 1;
   }
   @media (max-width: 680px) {
-    .journey-track { flex-direction: column; gap: 16px; }
-    .journey-oval { aspect-ratio: auto; border-radius: 40px; padding: 20px 24px; }
+    .journey-track { flex-direction: column; gap: 28px; align-items: center; }
+    .journey-node { padding: 0; }
     .journey-connector { display: none; }
   }
 
@@ -228,26 +225,16 @@
     </div>
 
     <div class="journey">
+      <div class="journey-connector"></div>
       <div class="journey-track">
         <div class="journey-node">
-          <div class="journey-connector"></div>
-          <div class="journey-oval">
-            <div class="journey-role">Grants Manager</div>
-            <div class="journey-org">Community Human Services · Monterey</div>
-          </div>
+          <div class="journey-logo-wrap"><img class="journey-logo" src="logos/chs.png" alt="Community Human Services"></div>
         </div>
         <div class="journey-node">
-          <div class="journey-connector"></div>
-          <div class="journey-oval">
-            <div class="journey-role">Strategic Support Manager, Grants</div>
-            <div class="journey-org">Project ECHO · UNM</div>
-          </div>
+          <div class="journey-logo-wrap"><img class="journey-logo tall" src="logos/echo.png" alt="Project ECHO · UNM"></div>
         </div>
         <div class="journey-node">
-          <div class="journey-oval">
-            <div class="journey-role">Independent Grants Consultant</div>
-            <div class="journey-org">Fieldworks</div>
-          </div>
+          <div class="journey-logo-wrap"><span style="font-family:'Pacifico',cursive; font-size:32px; color:var(--green); line-height:1;">fieldworks</span></div>
         </div>
       </div>
     </div>
