@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Meet Natalie — Fieldworks Grant Advisory</title>
-<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
   :root {
     --green: #1E3D2B; --green-mid: #2D5A3D; --green-deep: #16291D;
@@ -28,7 +28,13 @@
   .nav-links a:hover { color: var(--green); }
   .nav-cta { background: var(--green); color: var(--cream) !important; padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 13px; transition: background 0.15s; }
   .nav-cta:hover { background: var(--green-mid); }
-  @media (max-width: 768px) { .nav-links { gap: 16px; } }
+  @media (max-width: 768px) {
+    nav { padding: 14px 16px; gap: 12px; }
+    .logo { font-size: 24px; flex-shrink: 0; }
+    .nav-links { gap: 14px; }
+    .nav-links a { font-size: 13px; }
+    .nav-cta { padding: 9px 14px; font-size: 12px; }
+  }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -104,60 +110,34 @@
     height: 52px; width: auto; margin: 0 auto 14px; display: block; opacity: 0.9;
   }
 
-  /* THE BOOK */
+  /* THE TYPED PAGE */
   .book-section { text-align: center; }
-  .book-stage {
-    perspective: 2600px; display: flex; justify-content: center; margin: 24px auto 0; max-width: 660px;
-  }
-  .book {
-    position: relative; width: 100%; max-width: 620px;
-    display: flex; transform-style: preserve-3d;
-    filter: drop-shadow(0 22px 42px rgba(30,41,29,0.3));
-  }
-  /* warm textured pages — each page taller than wide so the spread reads as a book */
-  .book-page {
-    width: 50%; min-height: 400px; padding: 40px 32px; position: relative;
+  .type-stage { display: flex; justify-content: center; margin: 24px auto 0; }
+  .type-page {
+    width: 100%; max-width: 520px; min-height: 480px; padding: 48px 40px; position: relative;
+    text-align: left; border-radius: 6px;
     background:
-      repeating-linear-gradient(0deg, rgba(190,170,130,0.035) 0 28px, transparent 28px 29px),
+      repeating-linear-gradient(0deg, rgba(190,170,130,0.035) 0 30px, transparent 30px 31px),
       linear-gradient(180deg, #FBF4E4 0%, #F3E9D2 100%);
-  }
-  .book-page.left {
-    border-radius: 5px 0 0 5px;
-    /* deep gutter shadow toward the spine on the right edge */
-    box-shadow: inset -26px 0 34px -20px rgba(90,70,40,0.4);
-  }
-  .book-page.right {
-    border-radius: 0 5px 5px 0; transform-origin: left center;
-    box-shadow: inset 26px 0 34px -20px rgba(90,70,40,0.4);
-  }
-  /* center spine crease line between the two pages */
-  .book-spine-crease {
-    position: absolute; top: 0; bottom: 0; left: 50%; width: 3px; transform: translateX(-50%);
-    background: linear-gradient(90deg, rgba(90,70,40,0.35), rgba(90,70,40,0.15), rgba(90,70,40,0.35));
-    z-index: 4; pointer-events: none;
-  }
-
-
-  .page-text {
-    font-family: Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 2.0; color: #3a3122;
-    text-align: left;
+    box-shadow: 0 22px 42px rgba(30,41,29,0.22), inset 0 0 0 1px rgba(160,140,100,0.18);
   }
   .page-chapter {
-    font-family: 'Pacifico', cursive; font-size: 27px; color: var(--green); margin-bottom: 22px; text-align: center;
+    font-family: 'Pacifico', cursive; font-size: 26px; color: var(--green); margin-bottom: 24px; text-align: center;
   }
-  .page-folio { text-align: center; font-family: Georgia, serif; font-size: 12px; color: #9a9080; margin-top: 24px; font-style: italic; }
-
-  .book-hint { font-size: 13px; color: var(--gray); font-style: italic; margin-top: 20px; opacity: 0.7; }
+  .type-text {
+    font-family: 'Special Elite', 'Courier New', monospace; font-size: 15.5px; line-height: 2.0; color: #3a3122;
+    white-space: pre-wrap; min-height: 300px;
+  }
+  .type-cursor {
+    display: inline-block; width: 9px; height: 1.15em; background: #3a3122; vertical-align: text-bottom;
+    margin-left: 2px; animation: blink 0.9s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
 
   @media (max-width: 680px) {
-    .book { flex-direction: column; max-width: 320px; }
-    .book-page { width: 100%; min-height: auto; }
-    .book-page.left { display: none; }
-    .book-page.right { border-radius: 5px; }
-    .book-spine-crease { display: none; }
+    .type-page { max-width: 92vw; padding: 36px 26px; min-height: 420px; }
+    .type-text { font-size: 14px; }
   }
-
-  /* COOKBOOK GRACE NOTE (woven into book page, handled in copy) */
 
   /* CTA */
   .cta { text-align: center; background: var(--green); border-radius: 24px; padding: 64px 40px; max-width: 860px; margin: 40px auto 0; }
@@ -246,32 +226,15 @@
   </div>
 </section>
 
-<!-- THE WRITER / THE BOOK -->
+<!-- THE WRITER / THE TYPED PAGE -->
 <section class="book-section">
   <div class="reveal">
     <div class="sec-label">Who I am</div>
   </div>
-  <div class="book-stage reveal">
-    <div class="book" id="book">
-      <!-- left page -->
-      <div class="book-page left">
-        <div class="page-chapter">A writer, first</div>
-        <div class="page-text">
-          For years I've been drafting and revising my debut fantasy novel — a labor of discipline, patience, and stubborn love for the craft.
-          <br><br>
-          It's taught me exactly what I bring to every grant I write.
-        </div>
-      </div>
-      <!-- right page -->
-      <div class="book-page right">
-        <div class="page-text">
-          The tenacity to see hard things through. An obsession with getting the words exactly right. And the belief that a story told well can influence what's possible.
-          <br><br>
-          When I'm not reading or writing, you'll find me collecting cookbooks or building shelves to hold said books.
-        </div>
-      </div>
-      <!-- center spine crease -->
-      <div class="book-spine-crease"></div>
+  <div class="type-stage reveal">
+    <div class="type-page" id="typePage">
+      <div class="page-chapter">A writer, first</div>
+      <div class="type-text"><span id="typedText"></span><span class="type-cursor" id="typeCursor"></span></div>
     </div>
   </div>
 </section>
@@ -308,6 +271,34 @@
     entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
   }, { threshold: 0.15 });
   revealEls.forEach(el => obs.observe(el));
+
+  // Typewriter — writes her page when scrolled into view
+  const typeCopy = "For years I've been drafting and revising my debut fantasy novel — a labor of discipline, patience, and stubborn love for the craft. It's taught me exactly what I bring to every grant I write.\n\nThe tenacity to see hard things through. An obsession with getting the words exactly right. And the belief that a story told well can influence what's possible.\n\nI write between a full career, a company my husband and I are building, and a family that's growing. It's the busiest, hardest, best season of our lives. Nothing about it is easy — and I wouldn't trade a word of it. That's what I bring to your mission: someone who knows how to keep showing up for the things that matter.";
+  const typedEl = document.getElementById('typedText');
+  let typeStarted = false;
+
+  function typeIt() {
+    if (typeStarted) return;
+    typeStarted = true;
+    let i = 0;
+    function tick() {
+      if (i >= typeCopy.length) return; // done — cursor keeps blinking
+      const ch = typeCopy[i];
+      typedEl.textContent += ch;
+      i++;
+      let delay = 20 + Math.random() * 22;           // natural key rhythm
+      if (ch === ',' ) delay = 140;
+      if (ch === '.' ) delay = 270;
+      if (ch === '\n') delay = 400;                   // paragraph breath
+      setTimeout(tick, delay);
+    }
+    setTimeout(tick, 500);
+  }
+
+  const typeObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) typeIt(); });
+  }, { threshold: 0.35 });
+  typeObs.observe(document.getElementById('typePage'));
 </script>
 
 </body>
